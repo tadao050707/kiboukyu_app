@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 開発言語
+  - Ruby 3.0.1
+  - Ruby on Rails 6.1.6
 
-Things you may want to cover:
+## 就職Termの技術
+  - AWS EC2
+  - devise
 
-* Ruby version
+## カリキュラム外の技術
+  - Active Hash
 
-* System dependencies
+## 実行手順
+    $ git clone git@github.com:cha-ri-bi-nzu/sotsugyou_kadai.git
+    $ cd sotsugyou_app
+    $ bundle install
+    $ yarn install
+    $ rails db:create
+    $ rails db:migrate
+    $ rails db:seed
+    $ rails s
 
-* Configuration
+## カタログ設計
+  https://docs.google.com/spreadsheets/d/1yQrJ6jt_CIlUBfRTF-U0KDcIYWD3LDYFfQgl7hAZOoI/edit#gid=782464957
 
-* Database creation
+## テーブル定義書
+  https://docs.google.com/spreadsheets/d/1yQrJ6jt_CIlUBfRTF-U0KDcIYWD3LDYFfQgl7hAZOoI/edit#gid=2020033787
 
-* Database initialization
+## ER図
+  ![ER図](app/assets/images/sotsugyou_ERzu.png)
 
-* How to run the test suite
+## 画面遷移図
+  ![画面遷移図](app/assets/images/sotsugyou_gamenseni.png)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## ワイヤーフレーム
+  ![ワイヤーフレーム](app/assets/images/sotsugyou_wire.png)
+  
