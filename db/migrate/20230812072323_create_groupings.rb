@@ -4,7 +4,7 @@ class CreateGroupings < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.references :group, null: false, foreign_key: true
 
-      t.timestamps
+      t.timestamp :created_at, null: false
     end
   end
 end
