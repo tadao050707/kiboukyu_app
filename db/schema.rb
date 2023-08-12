@@ -16,10 +16,13 @@ ActiveRecord::Schema.define(version: 2023_08_12_072323) do
   enable_extension "plpgsql"
 
   create_table "groupings", force: :cascade do |t|
+    t.boolean "leave_group", default: false, null: false
     t.bigint "user_id", null: false
     t.bigint "group_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_groupings_on_group_id"
+    t.index ["leave_group"], name: "index_groupings_on_leave_group"
     t.index ["user_id"], name: "index_groupings_on_user_id"
   end
 
