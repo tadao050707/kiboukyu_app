@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def groups_name(user)
     grouping = Grouping.where(user_id: user.id).where(leave_group: false)
     if grouping.present?
-      Group.where(id: grouping.pluck(:group_id))
+      Group.select(:id, :name).where(id: grouping.pluck(:group_id))
     else
       nil
     end
