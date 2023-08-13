@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   private
   def groups_name(user)
-    if Grouping.where(user_id: user.id).present?
+    if Grouping.where(user_id: user.id).where(leave_group: false).present?
       Group.select(:id, :name)
     else
       nil
