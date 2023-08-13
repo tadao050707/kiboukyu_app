@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
 
   resources :groups, only: %i[new create show edit update destroy]
+  resources :groupings, only: %i[create update destroy]
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
