@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :set_group, only: %i[show edit update destroy]
+
   def new
     @group = Group.new
   end
@@ -31,5 +33,9 @@ class GroupsController < ApplicationController
   private
   def group_params
     params.require(:group).permit(:name, :owner_id)
+  end
+
+  def set_group
+    @group = Group.find(params[:id])
   end
 end
