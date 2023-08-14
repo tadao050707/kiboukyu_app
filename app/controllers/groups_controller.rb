@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @user = @group.users
+    @users = @group.users
   end
 
   def edit

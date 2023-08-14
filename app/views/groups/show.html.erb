@@ -1,2 +1,16 @@
-<h1>Groups#show</h1>
-<p>Find me in app/views/groups/show.html.erb</p>
+<h2><%= "#{@group.name}" %></h2>
+
+<br>
+<table>
+  <tr>
+    <th>社員名簿</th>
+    <th colspan="2"></th>
+  </tr>
+  <tr>
+    <% @users.each do |user| %>
+      <td><%= user.name %></td>
+    <% end %>
+  </tr>
+</table>
+<br>
+<%= link_to "ユーザーを招待する", new_group_path %>
