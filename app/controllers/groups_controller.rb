@@ -7,8 +7,8 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.owner = current_user
     if @group.save
-      @group.invite_member(@group.owner)
-      redirect_to @group, notice: "#{@group.name}グループに参加しました。"
+      @group.groupings.create(user: @group.owner)
+      redirect_to group_path(@group), notice: "グループ『#{@group.name}』を作成しました。"
     else
       flash.now[:error] = "グループ作成に失敗しました"
       render :new
