@@ -6,11 +6,12 @@
     <th>社員名簿</th>
     <th colspan="2"></th>
   </tr>
-  <tr>
-    <% @users.each do |user| %>
+  <% @users.each do |user| %>
+    <tr>
       <td><%= user.name %></td>
-    <% end %>
-  </tr>
+    </tr>
+  <% end %>
+  
 </table>
 <br>
 <%= link_to "ユーザーを招待する", new_group_path %>
