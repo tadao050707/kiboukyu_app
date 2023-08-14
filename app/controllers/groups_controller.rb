@@ -1,4 +1,4 @@
-class GroupController < ApplicationController
+class GroupsController < ApplicationController
   def new
     @group = Group.new
   end
@@ -27,7 +27,7 @@ class GroupController < ApplicationController
 
   def destroy
   end
-
+  
   private
   def group_params
     params.require(:group).permit(:name, :owner_id)
