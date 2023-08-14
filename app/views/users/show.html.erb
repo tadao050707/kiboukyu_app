@@ -3,7 +3,7 @@
 <br>
 <% if @group.present? %>
   <% @group.each do |group| %>
-    <%= link_to "#{group.name}", new_group_path(group) %>
+    <%= link_to "#{group.name}", group_path(group) %>
     <br>
   <% end %>
 <% else %>
