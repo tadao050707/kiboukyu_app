@@ -22,4 +22,4 @@
   
 </table>
 <br>
-<%= link_to "ユーザーを招待する", groupings_path %>
+<%= link_to "ユーザーを招待する", groupings_path if current_user == @group.owner || current_user.admin %>
