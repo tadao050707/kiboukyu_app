@@ -1,5 +1,7 @@
 class GroupingsController < ApplicationController
   def index
+    @group = Group.find(params[:group_id]) if params[:group_id].present?
+    @group = Group.find(params[:grouping][:group_id]) if params[:grouping].present?
     @user = "メールアドレスでユーザーを探しましょう。"
     if params[:grouping].present?
       @user = User.where(email: params[:grouping][:email])
@@ -7,7 +9,8 @@ class GroupingsController < ApplicationController
   end
 
   def create
-    grouping = self.user.groupings.create(group_id: params[:group_id])
+    binding.pry
+    grouping = User.find(params[:user_id]).groupings.create(group_id: params[:group_id])
     redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが参加されました。"
   end
 

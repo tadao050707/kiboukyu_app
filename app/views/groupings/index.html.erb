@@ -4,6 +4,7 @@
   <div>
     <%= f.label :"メールアドレス：" %>
     <%= f.text_field :email %>
+    <%= f.hidden_field :group_id, value: @group.id %>
     <%= f.submit "検索" %>
   </div>
   <% if @user.class == String %>
@@ -13,7 +14,7 @@
       <% @user.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= link_to "招待する", groupings_path(user.id), method: :post %></td>
+          <td><%= link_to "招待する", groupings_path(user_id: user.id, group_id: @group.id), method: :post %></td>
           <td><%= link_to "キャンセル", groupings_path %></td>
         </tr>
       <% end %>
@@ -23,3 +24,5 @@
     <p>　 メールアドレスが間違っています。</p>
   <% end %>
 <% end %>
+<br>
+<%= link_to "戻る", group_path(@group) %>
