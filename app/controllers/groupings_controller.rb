@@ -1,23 +1,32 @@
 class GroupingsController < ApplicationController
   def index
     @group = Group.find(params[:group_id]) if params[:group_id].present?
-    @group = Group.find(params[:grouping][:group_id]) if params[:grouping].present?
     @user = "メールアドレスでユーザーを探しましょう。"
     if params[:grouping].present?
-      @user = User.where(email: params[:grouping][:email])
+      @group = Group.find(params[:grouping][:group_id])
+      @user = User.find_by(email: params[:grouping][:email])
+      @grouping = Grouping.find_by(user_id: @user.id, group_id: @group.id)
     end
   end
 
   def create
-    grouping = Grouping.find(user_id: params[:user_id]).groupings.create(group_id: params[:group_id])
+    grouping = Grouping.create(user_id: params[:user_id], group_id: params[:group_id])
     redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが参加されました。"
   end
 
   def update
-    binding.pry
-    grouping = Grouping.where(user_id: params[:user_id]).where(group_id: params[:id]).includes(:user)
-    grouping.update(user_id: params[:user_id], group_id: params[:group_id], leave_group: true)
-    redirect_to group_path(params[:id]), notice: "#{User.find(params[:user_id]).name}さんが除名されました。"
+    if params[:id].present? && params[:user_id].present?
+      grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:id])
+      in_or_out(grouping)
+      redirect_to group_path(params[:id]), notice: "#{User.find(params[:user_id]).name}さんが除名されました。"
+    elsif params[:id].present?
+      grouping = Grouping.find(params[:id])
+      in_or_out(grouping)
+      redirect_to group_path(grouping.group_id), notice: "#{User.find(grouping.user_id).name}さんが再招待されました。"
+    else
+      flash[:error] = "ユーザーはグループに所属していません。"
+      redirect_to group_path(params[:id])
+    end
   end
 
   def destroy
@@ -26,11 +35,8 @@ class GroupingsController < ApplicationController
   end
 
   private
-  # def in_or_out(grouping)
-  #   if grouping.leave_group
-  #     false
-  #   else
-  #     true
-  #   end
-  # end
+  def in_or_out(grouping)
+    new_leave_group = !grouping.leave_group
+    grouping.update(leave_group: new_leave_group)
+  end
 end
