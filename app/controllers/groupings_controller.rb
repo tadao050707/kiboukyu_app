@@ -1,7 +1,9 @@
 class GroupingsController < ApplicationController
 
   def index
-    
+    if params[:user][:email]present?
+      @user = User.where(email: params[:user][:email])
+    end
   end
 
   def create
