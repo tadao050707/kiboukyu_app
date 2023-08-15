@@ -9,20 +9,28 @@ class GroupingsController < ApplicationController
   end
 
   def create
-    binding.pry
-    grouping = User.find(params[:user_id]).groupings.create(group_id: params[:group_id])
+    grouping = Grouping.find(user_id: params[:user_id]).groupings.create(group_id: params[:group_id])
     redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが参加されました。"
   end
 
   def update
-    grouping = self.user.groupings.find_by(id: params[:id]).update(leave_group: true)
-    redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが除名されました。"
+    binding.pry
+    grouping = Grouping.where(user_id: params[:user_id]).where(group_id: params[:id]).includes(:user)
+    grouping.update(user_id: params[:user_id], group_id: params[:group_id], leave_group: true)
+    redirect_to group_path(params[:id]), notice: "#{User.find(params[:user_id]).name}さんが除名されました。"
   end
 
   def destroy
-    user_name = self.user.name
-    back_url = grouping.group_id
-    grouping = self.user.groupings.find_by(id: params[:id]).destroy
-    redirect_to group_path(back_url), notice: "#{user_name}さんが完全に除名されました。"
+    grouping = Grouping.find_by(params[:id]).destroy
+    redirect_to group_path(params[:id]), notice: "#{grouping.user.name}さんが完全に除名されました。"
   end
+
+  private
+  # def in_or_out(grouping)
+  #   if grouping.leave_group
+  #     false
+  #   else
+  #     true
+  #   end
+  # end
 end

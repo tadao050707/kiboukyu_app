@@ -18,7 +18,8 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @users = @group.users
+    @groupings = @group.groupings.where(leave_group: false)
+    @users = @groupings.map{|g| User.where(id: g.user_id)}.flatten
   end
 
   def edit
