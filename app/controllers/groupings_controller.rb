@@ -1,4 +1,9 @@
 class GroupingsController < ApplicationController
+
+  def index
+    
+  end
+
   def create
     grouping = self.user.groupings.create(group_id: params[:group_id])
     redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが参加されました。"
