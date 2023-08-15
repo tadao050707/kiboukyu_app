@@ -1,2 +1,23 @@
-<h1>Groupings#create</h1>
-<p>Find me in app/views/groupings/create.html.erb</p>
+<h3>ユーザー検索</h3>
+
+<%= form_with(local: true, url: groupings_path, method: :get, scope: :grouping) do |f| %>
+  <div>
+    <%= f.label :"メールアドレス：" %><>
+    <%= f.text_field :email %>
+    <%= f.submit "検索" %>
+  </div>
+  <% if @user.present? %>
+    <table>
+      <% @user.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= link_to "招待する", groupings_path(user.id), method: :post %></td>
+          <td><%= link_to "キャンセル", groupings_path %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>お探しのユーザーが登録されていないか、</p>
+    <p>　 メールアドレスが間違っています。</p>
+  <% end %>
+<% end %>
