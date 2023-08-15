@@ -1,8 +1,8 @@
 class GroupingsController < ApplicationController
-
   def index
-    if params[:user][:email]present?
-      @user = User.where(email: params[:user][:email])
+    @user = "メールアドレスでユーザーを探しましょう。"
+    if params[:grouping].present?
+      @user = User.where(email: params[:grouping][:email])
     end
   end
 

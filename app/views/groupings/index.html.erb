@@ -2,11 +2,13 @@
 
 <%= form_with(local: true, url: groupings_path, method: :get, scope: :grouping) do |f| %>
   <div>
-    <%= f.label :"メールアドレス：" %><>
+    <%= f.label :"メールアドレス：" %>
     <%= f.text_field :email %>
     <%= f.submit "検索" %>
   </div>
-  <% if @user.present? %>
+  <% if @user.class == String %>
+    <p><%= @user %></p>
+  <% elsif @user.present? %>
     <table>
       <% @user.each do |user| %>
         <tr>
@@ -16,7 +18,7 @@
         </tr>
       <% end %>
     </table>
-  <% else %>
+    <% else %>
     <p>お探しのユーザーが登録されていないか、</p>
     <p>　 メールアドレスが間違っています。</p>
   <% end %>
