@@ -32,7 +32,7 @@ Group.create!(
 5.times do |n|
   Group.create!(
       name: "group#{n+10}",
-      owner_id: n+10
+      owner_id: n+2
   )
 end
 
