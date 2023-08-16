@@ -57,6 +57,13 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    if current_user.admin
+      group_name = @group.name
+      @group.destroy
+      redirect_to user_path(current_user), notice: "#{group_name}を完全に削除しました"
+    else
+      redirect_to user_path(current_user), notice: "管理者のみ削除が行えます"
+    end
   end
   
   private
