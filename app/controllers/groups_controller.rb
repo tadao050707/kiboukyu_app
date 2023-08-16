@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
     if @group.update_attribute(:owner_id, params[:user_id])
       redirect_to @group
     else
-      flash.now[:error] = "オーナー譲渡に失敗しました"
+      flash.now[:alert] = "オーナー譲渡に失敗しました"
       render :new
     end
   end
