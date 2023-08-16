@@ -26,6 +26,13 @@ class GroupsController < ApplicationController
   end
 
   def update
+    before_name = @group.name
+    if @group.update(group_params)
+      redirect_to group_path(@group), notice: "#{before_name}を編集しました"
+    else
+      flash.now[:alert] = "編集に失敗しました"
+      render :edit
+    end
   end
 
   def change_owner
