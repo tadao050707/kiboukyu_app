@@ -28,7 +28,7 @@
   <br>
   <%= link_to "グループ編集", edit_group_path(@group) %>
   <br>
-  <%= link_to "グループ削除", group_path(@group), method: :patch, date: {confirm: "#{@group.name}を削除してもよろしいですか？"} %>
+  <%= link_to "グループ削除", group_invalid_path(@group), method: :patch, date: {confirm: "#{@group.name}を削除してもよろしいですか？"} %>
 <% end %>
 <% if current_user.admin %>
   <br>

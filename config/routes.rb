@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :groups, only: %i[new create show edit update destroy] do
     patch :change_owner, path: '/:user_id/owners/'
+    patch :invalid, path: '/invalids/'
   end
   resources :groupings, only: %i[index create update destroy]
 
