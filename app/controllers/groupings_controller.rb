@@ -17,7 +17,8 @@ class GroupingsController < ApplicationController
   def update
     if params[:id].present? && params[:user_id].present?
       grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:id])
-      in_or_out(grouping)
+      new_leave_group = !grouping.leave_group
+      grouping.update_attribute(:leave_group, new_leave_group)
       redirect_to group_path(params[:id]), notice: "#{User.find(params[:user_id]).name}さんが除名されました。"
     elsif params[:id].present?
       grouping = Grouping.find(params[:id])
