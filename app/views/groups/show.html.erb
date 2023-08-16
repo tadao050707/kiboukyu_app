@@ -26,9 +26,9 @@
   <br>
   <%= link_to "ユーザーを招待する", groupings_path(group_id: @group.id) %>
   <br>
-  <%= link_to "グループ編集", edit_group_path(group_id: @group.id) %>
+  <%= link_to "グループ編集", edit_group_path(@group) %>
   <br>
-  <%= link_to "グループ削除", group_path(group_id: @group.id), method: :delete, date: {confirm: "#{@group.name}を削除してもよろしいですか？"} %>
+  <%= link_to "グループ削除", group_path(@group), method: :patch, date: {confirm: "#{@group.name}を削除してもよろしいですか？"} %>
 <% end %>
 <% if current_user.admin %>
   <br>
