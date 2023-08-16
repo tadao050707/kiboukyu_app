@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[show edit update destroy]
+  before_action :admin_or_owner, only: %i[edit update change_owner invalid]
 
   def new
     @group = Group.new
@@ -73,5 +74,9 @@ class GroupsController < ApplicationController
 
   def set_group
     @group = Group.find(params[:id])
+  end
+
+  def admin_or_owner
+    redirect_to group_path(@group), "この機能はオーナーと管理者のみ使用できます" unless current_user == @group.owner || current_user.admin
   end
 end
