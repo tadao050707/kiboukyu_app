@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, only: [:show]
 
-  resources :groups, only: %i[new create show edit update destroy]
+  resources :groups, only: %i[new create show edit update destroy] do
+    patch :change_owners, path: '/:user_id/owners/'
+  end
   resources :groupings, only: %i[index create update destroy]
 
   if Rails.env.development?
