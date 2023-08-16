@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
       @group.groupings.create(user: @group.owner)
       redirect_to group_path(@group), notice: "グループ『#{@group.name}』を作成しました。"
     else
-      flash.now[:error] = "グループ作成に失敗しました"
+      flash.now[:alert] = "グループ作成に失敗しました"
       render :new
     end
   end

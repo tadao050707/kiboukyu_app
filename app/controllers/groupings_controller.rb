@@ -24,7 +24,7 @@ class GroupingsController < ApplicationController
       in_or_out(grouping)
       redirect_to group_path(grouping.group_id), notice: "#{User.find(grouping.user_id).name}さんが再招待されました。"
     else
-      flash[:error] = "ユーザーはグループに所属していません。"
+      flash[:alert] = "ユーザーはグループに所属していません。"
       redirect_to group_path(params[:id])
     end
   end
