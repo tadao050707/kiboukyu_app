@@ -17,9 +17,8 @@ class GroupingsController < ApplicationController
   def update
     if params[:id].present? && params[:user_id].present?
       grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:id])
-      new_leave_group = !grouping.leave_group
-      grouping.update_attribute(:leave_group, new_leave_group)
-      redirect_to group_path(params[:id]), notice: "#{User.find(params[:user_id]).name}さんが除名されました。"
+      in_or_out(grouping)
+      redirect_to group_path(params[:id]), notice: owner_or_people(grouping)
     elsif params[:id].present?
       grouping = Grouping.find(params[:id])
       in_or_out(grouping)
@@ -38,6 +37,18 @@ class GroupingsController < ApplicationController
   private
   def in_or_out(grouping)
     new_leave_group = !grouping.leave_group
-    grouping.update(leave_group: new_leave_group)
+    if new_leave_group
+      grouping.update_attribute(:leave_group, new_leave_group)
+    else
+      grouping.update(leave_group: new_leave_group)
+    end
+  end
+
+  def owner_or_people(grouping)
+    if grouping.group.owner == grouping.user
+      "オーナーは脱退できません！" 
+    else
+      "#{User.find(params[:user_id]).name}さんが除名されました。"
+    end
   end
 end
