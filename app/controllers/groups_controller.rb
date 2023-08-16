@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update destroy]
+  before_action :set_group, only: %i[show edit update change_owner invalid destroy]
   before_action :admin_or_owner, only: %i[edit update change_owner invalid]
+  before_action :your_group_and_group_present, only: %i[show edit update change_owner invalid]
 
   def new
     @group = Group.new
@@ -37,7 +38,6 @@ class GroupsController < ApplicationController
   end
 
   def change_owner
-    @group = Group.find(params[:group_id])
     before_owner = @group.owner.name
     if @group.update_attribute(:owner_id, params[:user_id])
       redirect_to @group, notice: "#{before_owner}さんから#{@group.owner.name}さんに、オーナー権限を譲渡しました"
@@ -48,7 +48,6 @@ class GroupsController < ApplicationController
   end
 
   def invalid
-    @group = Group.find(params[:group_id])
     if @group.update_attribute(:invalid_group, true)
       redirect_to user_path(current_user), notice: "#{@group.name}を削除しました"
     else
@@ -73,10 +72,22 @@ class GroupsController < ApplicationController
   end
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:id]) if params[:id].present?
+    @group = Group.find(params[:group_id]) if params[:group_id].present?
   end
 
   def admin_or_owner
-    redirect_to group_path(@group), "この機能はオーナーと管理者のみ使用できます" unless current_user == @group.owner || current_user.admin
+    set_group
+    redirect_to group_path(@group), notice: "この機能はオーナーと管理者のみ使用できます" unless current_user == @group.owner || current_user.admin
+  end
+
+  def your_group_and_group_present
+    unless current_user.admin
+      if @group.invalid_group
+        redirect_to user_path(current_user), notice: "#{@group.name}は既に削除されています"
+      else
+        redirect_to user_path(current_user), notice: "所属していないグループにはアクセスできません" unless Grouping.where(user_id: current_user.id, group_id: @group.id, leave_group: false).present?
+      end
+    end
   end
 end
