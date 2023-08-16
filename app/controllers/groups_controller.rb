@@ -28,6 +28,16 @@ class GroupsController < ApplicationController
   def update
   end
 
+  def change_owner
+    @group = Group.find(params[:group_id])
+    if @group.update(:owner_id, params[:user_id])
+      redirect_to @group
+    else
+      flash.now[:error] = "オーナー譲渡に失敗しました"
+      render :new
+    end
+  end
+
   def destroy
   end
   
