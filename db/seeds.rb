@@ -27,12 +27,22 @@ end
 Group.create!(
     name: "admin_group",
     owner_id: 1
+    invalid_group: false
 )
 
 5.times do |n|
   Group.create!(
       name: "group#{n+10}",
       owner_id: n+2
+      invalid_group: false
+  )
+end
+
+5.times do |n|
+  Group.create!(
+      name: "group#{n+15}",
+      owner_id: 1
+      invalid_group: true
   )
 end
 
