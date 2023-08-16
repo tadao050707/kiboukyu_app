@@ -45,7 +45,17 @@ class GroupsController < ApplicationController
       render :show
     end
   end
-  
+
+  def invalid
+    @group = Group.find(params[:group_id])
+    if @group.update_attribute(:invalid_group, true)
+      redirect_to user_path(current_user), notice: "#{@group.name}を削除しました"
+    else
+      flash.now[:alert] = "#{@group.name}の削除に失敗しました"
+      render :show
+    end
+  end
+
   def destroy
   end
   
