@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
 
   def change_owner
     @group = Group.find(params[:group_id])
-    if @group.update(:owner_id, params[:user_id])
+    if @group.update_attribute(:owner_id, params[:user_id])
       redirect_to @group
     else
       flash.now[:error] = "オーナー譲渡に失敗しました"
