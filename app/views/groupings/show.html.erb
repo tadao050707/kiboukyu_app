@@ -1,0 +1,12 @@
+<h2><%= "#{@user.name}さんの#{@grouping.group.name}希望休" %></h2>
+
+<br>
+<% if @sesired_holidays.present? %>
+  <% @sesired_holidays.each do |sesired_holiday| %>
+    <%= "#{sesired_holiday.my_holiday}" %>
+    <br>
+  <% end %>
+<% else %>
+  <p>希望休を申請していませんしていません</p>
+<% end %>
+<%= link_to "希望休を申請する", new_sesired_holiday_path %>
