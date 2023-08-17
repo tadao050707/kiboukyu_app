@@ -1,2 +1,21 @@
-<h1>SesiredHolidays#new</h1>
-<p>Find me in app/views/sesired_holidays/new.html.erb</p>
+<h2>希望休申請</h2>
+
+<%= form_with(model: @sesired_holiday, local: true) do |f| %>
+  <% if @sesired_holiday.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @sesired_holiday.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @sesired_holiday.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :"希望休日：" %>
+    <%= f.date_field :my_holiday %>
+  </div>
+  <br>
+  <br>
+  <%= f.submit :"申請" %>
+<% end %>
