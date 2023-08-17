@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :groupings, dependent: :destroy
   has_many :groups, through: :groupings, source: :group
   has_many :groups, foreign_key: :owner_id
+  has_many :sesired_holidays, dependent: :destroy
 end
