@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  unauthenticated do
+    as :user do
+      root :to => 'devise/sessions#new'
+    end
+  end
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   resources :users, only: [:show]
