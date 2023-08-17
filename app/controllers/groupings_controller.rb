@@ -1,4 +1,6 @@
 class GroupingsController < ApplicationController
+  before_action :grouping_current_user_or_admin, only: [:show]
+
   def index
     @group = Group.find(params[:group_id]) if params[:group_id].present?
     @user = "メールアドレスでユーザーを探しましょう。"
@@ -15,9 +17,7 @@ class GroupingsController < ApplicationController
   end
 
   def show
-    @grouping = Grouping.find(params[:id])
     @group = Group.find(@grouping.group_id)
-    @user = User.find(@grouping.user_id)
     @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id)
   end
   
@@ -57,5 +57,11 @@ class GroupingsController < ApplicationController
     else
       "#{User.find(params[:user_id]).name}さんが除名されました。"
     end
+  end
+
+  def grouping_current_user_or_admin
+    @grouping = Grouping.find(params[:id])
+    @user = User.find(@grouping.user_id)
+    redirect_to user_path(current_user), notice: "他のユーザーの希望休は閲覧出来ません" unless current_user == @user || current_user.admin
   end
 end

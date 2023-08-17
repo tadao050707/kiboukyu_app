@@ -1,8 +1,8 @@
 class SesiredHolidaysController < ApplicationController
+  before_action :sesired_holiday_current_user_or_admin, only: %i[new create destroy]
   def new
     @sesired_holiday = SesiredHoliday.new
     @group = Group.find(params[:group_id])
-    @user = User.find(params[:user_id])
   end
 
   def create
@@ -22,5 +22,11 @@ class SesiredHolidaysController < ApplicationController
   private
   def sesired_holiday_params
     params.require(:sesired_holiday).permit(:user_id, :group_id, :my_holiday)
+  end
+
+  def sesired_holiday_current_user_or_admin
+    @user = User.find(params[:user_id]) if params[:user_id].present?
+    @user = User.find(params[:sesired_holiday][:user_id]) if params[:sesired_holiday].present?
+    redirect_to user_path(current_user), notice: "他のユーザーの希望休は申請出来ません" unless current_user == @user || current_user.admin
   end
 end
