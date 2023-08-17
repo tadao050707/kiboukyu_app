@@ -6,9 +6,9 @@ class SesiredHolidaysController < ApplicationController
   end
 
   def create
-    @sesired_holiday = User.find(params[:user_id]).sesired_holidays.new(sesired_holiday_params)
+    @sesired_holiday = User.find(params[:sesired_holiday][:user_id]).sesired_holidays.new(sesired_holiday_params)
     if @sesired_holiday.save
-      @grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:group_id])
+      @grouping = Grouping.find_by(user_id: params[:sesired_holiday][:user_id], group_id: params[:sesired_holiday][:group_id])
       redirect_to grouping_path(@grouping), notice: "『#{@sesired_holiday.my_holiday}』で希望休申請しました。"
     else
       flash.now[:alert] = "申請に失敗しました"
