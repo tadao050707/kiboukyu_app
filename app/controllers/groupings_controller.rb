@@ -15,7 +15,8 @@ class GroupingsController < ApplicationController
   end
 
   def show
-    @grouping = Grouping.find(params[:id]).includes(:group)
+    @grouping = Grouping.find(params[:id])
+    @group = Group.find(@grouping.group_id)
     @user = User.find(@grouping.user_id)
     @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id)
   end
