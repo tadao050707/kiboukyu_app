@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
   def show
     @groupings = @group.groupings.where(leave_group: false)
     @users = @groupings.map{|g| User.where(id: g.user_id)}.flatten
+    @grouping_id = Grouping.find_by(user_id: current_user.id, group_id: @group.id)
   end
 
   def edit
