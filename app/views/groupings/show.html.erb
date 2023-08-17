@@ -10,3 +10,7 @@
   <p>希望休を申請していませんしていません</p>
 <% end %>
 <%= link_to "希望休を申請する", new_sesired_holiday_path(user_id: @user.id, group_id: @group.id) %>
+<br>
+<br>
+<%= link_to "#{@group.name}に戻る", group_path(@group) %>
+<br>
