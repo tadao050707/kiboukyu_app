@@ -14,6 +14,12 @@ class GroupingsController < ApplicationController
     redirect_to group_path(grouping.group_id), notice: "#{grouping.user.name}さんが参加されました。"
   end
 
+  def show
+    @grouping = Grouping.find(params[:id]).includes(:group)
+    @user = User.find(@grouping.user_id)
+    @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id)
+  end
+  
   def update
     if params[:id].present? && params[:user_id].present?
       grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:id])
