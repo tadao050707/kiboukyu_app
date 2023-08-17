@@ -14,8 +14,10 @@
   <div>
     <%= f.label :"希望休日：" %>
     <%= f.date_field :my_holiday %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <%= f.submit :"申請" %>
   </div>
   <br>
   <br>
-  <%= f.submit :"申請" %>
 <% end %>
