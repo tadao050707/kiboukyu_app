@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'sesired_holidays/new'
+  get 'sesired_holidays/create'
+  get 'sesired_holidays/destroy'
   unauthenticated do
     as :user do
       root :to => 'devise/sessions#new'
