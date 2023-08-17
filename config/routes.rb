@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'sesired_holidays/new'
-  get 'sesired_holidays/create'
-  get 'sesired_holidays/destroy'
   unauthenticated do
     as :user do
       root :to => 'devise/sessions#new'
@@ -16,7 +13,10 @@ Rails.application.routes.draw do
     patch :change_owner, path: '/:user_id/owners/'
     patch :invalid, path: '/invalids/'
   end
-  resources :groupings, only: %i[index create update destroy]
+
+  resources :groupings, only: %i[index create show update destroy]
+
+  resources :sesired_holidays, only: %i[new create destroy]
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
