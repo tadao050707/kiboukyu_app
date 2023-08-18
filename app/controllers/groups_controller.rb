@@ -1,8 +1,8 @@
 require "date"
 
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update change_owner invalid destroy]
-  before_action :admin_or_owner, only: %i[edit update change_owner invalid]
+  before_action :set_group, only: %i[show edit update change_owner group_sesired_holiday invalid destroy]
+  before_action :admin_or_owner, only: %i[edit update change_owner group_sesired_holiday invalid]
   before_action :your_group_and_group_present, only: %i[show edit update change_owner invalid]
 
   def new
@@ -51,9 +51,10 @@ class GroupsController < ApplicationController
   end
 
   def group_sesired_holiday
+    binding.pry
     @month = Date.current >> 1
-    @sesired_holidays = SesiredHoliday.where(group_id: params[:id]).where(sesired_holiday >= Date.parse(@next_month.beginning_of_month << 1), sesired_holiday <= Date.parse(@next_month.end_of_month >> 1))
-
+    @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s))
+    
   end
 
   def invalid
