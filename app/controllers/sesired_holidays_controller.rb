@@ -19,8 +19,9 @@ class SesiredHolidaysController < ApplicationController
 
   def destroy
     @sesired_holiday = SesiredHoliday.find(params[:id])
-    flash[:notice] = "#{@sesired_holiday.my_holiday}の希望休が取り消されました"
-    redirect_to grouping_path(params[:grouping_id])
+    destroy_holiday = @sesired_holiday.my_holiday
+    @sesired_holiday.destroy
+    redirect_to grouping_path(params[:grouping_id]), notice: "#{destroy_holiday}の希望休が取り消されました"
   end
 
   private
