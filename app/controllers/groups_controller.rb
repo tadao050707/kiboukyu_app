@@ -53,7 +53,6 @@ class GroupsController < ApplicationController
   def group_sesired_holiday
     @month = Date.current >> 1
     @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s))
-
   end
 
   def invalid
