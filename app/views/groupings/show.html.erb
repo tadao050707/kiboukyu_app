@@ -2,13 +2,19 @@
 
 <br>
 <% if @sesired_holidays.present? %>
-  <% @sesired_holidays.each do |sesired_holiday| %>
-    <%= "#{sesired_holiday.my_holiday}" %>
-    <br>
-  <% end %>
+  <table>
+    <% @sesired_holidays.each do |sesired_holiday| %>
+      <tr>
+        <td><%= "#{sesired_holiday.my_holiday}" %></td>
+        <td><%= link_to "取り消し", sesired_holiday_path(sesired_holiday.id, @grouping.id), method: :delete, date: {confirm: "#{sesired_holiday.my_holiday}を取り消しますか？"} %></td>
+      </tr>
+    <% end %>
+  </table>
 <% else %>
   <p>希望休を申請していませんしていません</p>
 <% end %>
+<br>
+<br>
 <%= link_to "希望休を申請する", new_sesired_holiday_path(user_id: @user.id, group_id: @group.id) %>
 <br>
 <br>
