@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
 
   def group_sesired_holiday
     @month = Date.current >> 1
-    @sesired_holidays = SesiredHoliday.where(group_id: params[:id]).where(sesired_holiday: >= Date.parse(@next_month.beginning_of_month << 1), sesired_holiday: <= Date.parse(@next_month.end_of_month >> 1))
+    @sesired_holidays = SesiredHoliday.where(group_id: params[:id]).where(sesired_holiday >= Date.parse(@next_month.beginning_of_month << 1), sesired_holiday <= Date.parse(@next_month.end_of_month >> 1))
 
   end
 
