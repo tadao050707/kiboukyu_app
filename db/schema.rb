@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_16_084215) do
+ActiveRecord::Schema.define(version: 2023_08_17_081022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(version: 2023_08_16_084215) do
     t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
+  create_table "sesired_holidays", force: :cascade do |t|
+    t.date "my_holiday", null: false
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_sesired_holidays_on_group_id"
+    t.index ["my_holiday"], name: "index_sesired_holidays_on_my_holiday"
+    t.index ["user_id"], name: "index_sesired_holidays_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -52,12 +63,16 @@ ActiveRecord::Schema.define(version: 2023_08_16_084215) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "quit_user", default: false, null: false
     t.index ["admin"], name: "index_users_on_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
+    t.index ["quit_user"], name: "index_users_on_quit_user"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
+  add_foreign_key "sesired_holidays", "groups"
+  add_foreign_key "sesired_holidays", "users"
 end
