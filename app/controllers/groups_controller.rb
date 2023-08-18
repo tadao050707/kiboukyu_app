@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
 
   def change_owner
     before_owner = @group.owner.name
-    if @group.update_attribute(:owner_id, params[:user_id])
+    if @group.update_attribute(:owner_id, params[][:user_id])
       redirect_to @group, notice: "#{before_owner}さんから#{@group.owner.name}さんに、オーナー権限を譲渡しました"
     else
       flash.now[:alert] = "オーナー譲渡に失敗しました"
@@ -52,7 +52,16 @@ class GroupsController < ApplicationController
 
   def group_sesired_holiday
     @month = Date.current >> 1
-    @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s)).order(my_holiday: :asc)
+    # if params[:group].present?
+    #   n = 1
+    #   month = ""
+    #   3.times do
+    #     month += params[:group]["month#{n}i"]
+    #     n += 1
+    #   end
+    #   @month = Date.parse("20231001")
+    # end
+    @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s)).reorder(my_holiday: :asc)
   end
 
   def invalid
