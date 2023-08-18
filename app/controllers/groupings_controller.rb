@@ -19,6 +19,12 @@ class GroupingsController < ApplicationController
   def show
     @group = Group.find(@grouping.group_id)
     @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id)
+    @holidays = []
+    @sesired_holidays.each do |sesired_holiday|
+      if sesired_holiday.my_holiday.year.to_s == params[:year] && sesired_holiday.my_holiday.month.to_s == params[:month]
+        @holidays << sesired_holiday
+      end
+    end
   end
   
   def update

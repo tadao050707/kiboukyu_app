@@ -1,9 +1,18 @@
 <h2><%= "#{@user.name}さんの#{@group.name}希望休" %></h2>
 
 <br>
-<% if @sesired_holidays.present? %>
+<%= form_with url: grouping_path(@grouping), method: :get, local: true do |form| %>
+  <%= form.label :year, "年" %>
+  <%= form.select :year, (2023..2025) %>
+  <%= form.label :month, "月" %>
+  <%= form.select :month, (1..12).map { |month| [I18n.t("date.month_names")[month], month] } %>
+  <%= form.submit '絞り込み'%>
+<% end %>
+
+
+<% if @holidays.present? %>
   <table>
-    <% @sesired_holidays.each do |sesired_holiday| %>
+    <% @holidays.each do |sesired_holiday| %>
       <tr>
         <td><%= "#{sesired_holiday.my_holiday}" %></td>
         <td><%= link_to "取り消し", sesired_holiday_path(id: sesired_holiday.id, user_id: @user.id, grouping_id: @grouping.id), method: :delete, date: {confirm: "#{sesired_holiday.my_holiday}を取り消しますか？"} %></td>
