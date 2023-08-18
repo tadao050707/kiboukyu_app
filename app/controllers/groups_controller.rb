@@ -48,6 +48,10 @@ class GroupsController < ApplicationController
     end
   end
 
+  def group_sesired_holiday
+    
+  end
+
   def invalid
     if @group.update_attribute(:invalid_group, true)
       redirect_to user_path(current_user), notice: "#{@group.name}を削除しました"
